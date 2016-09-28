@@ -123,24 +123,28 @@ class PersonController extends Controller
 		// 					"publico" => $datosCars[0]->publico + $datosCarsDos[0]->publico,
 		// 					"repartidor" => $datosCars[0]->repartidor + $datosCarsDos[0]->repartidor);
 
-        //Funciona
-						// $datosTotales = array("hombre" => $datosPeople[0]->hombre, 
-						// 	"mujer" => $datosPeople[0]->mujer,
-						// 	"ninia" => $datosPeople[0]->ninia,
-						// 	"anciano" => $datosPeople[0]->anciano,
-						// 	"particular" => $datosCars[0]->particular,
-						// 	"bicicleta" => $datosCars[0]->bicicleta,
-						// 	"motocicleta" => $datosCars[0]->motocicleta,
-						// 	"taxi" => $datosCars[0]->taxi,
-						// 	"publico" => $datosCars[0]->publico,
-						// 	"repartidor" => $datosCars[0]->repartidor);
-
+       
 		// $string = "select * from category_people where calle_relevamiento like '%$calle%' and calle_lateral_a like '%$callea%' and calle_lateral_b like '%$calleb%' and hora_inicio >= '$horainicio' and hora_inicio <= '$horafin'";
 
-		$string = "select sum(hombre) as hombre, sum(ninia) as ninia, sum(mujer) as mujer, sum(anciano) as anciano from category_people where calle_relevamiento like '%$calle%' and calle_lateral_a like '%$callea%' and calle_lateral_b like '%$calleb%' and hora_inicio between '$horainicio' and '$horafin'";
+		$stringPeople = "select sum(hombre) as hombre, sum(ninia) as ninia, sum(mujer) as mujer, sum(anciano) as anciano from category_people where calle_relevamiento like '%$calle%' and calle_lateral_a like '%$callea%' and calle_lateral_b like '%$calleb%' and hora_inicio between '$horainicio' and '$horafin'";
 
-		$datos = DB::select(DB::raw($string));
+		$stringCars = "select sum(particular) as particular, sum(taxi) as taxi, sum(bicicleta) as bicicleta, sum(motocicleta) as motocicleta, sum(repartidor) as repartidor, sum(publico) as publico from category_cars where calle_relevamiento like '%$calle%' and calle_lateral_a like '%$callea%' and calle_lateral_b like '%$calleb%' and hora_inicio between '$horainicio' and '$horafin'";
 
-		return $datos;
+		$datosPeople = DB::select(DB::raw($stringPeople));
+		$datosCars = DB::select(DB::raw($stringCars));
+
+		$datosTotales = array("hombre" => $datosPeople[0]->hombre != null ? $datosPeople[0]->hombre : 0, 
+			"mujer" => $datosPeople[0]->mujer != null ? $datosPeople[0]->mujer : 0,
+			"ninia" => $datosPeople[0]->ninia != null ? $datosPeople[0]->ninia : 0,
+			"anciano" => $datosPeople[0]->anciano != null ? $datosPeople[0]->anciano : 0,
+			"particular" => $datosCars[0]->particular != null ? $datosCars[0]->particular : 0,
+			"bicicleta" => $datosCars[0]->bicicleta != null ? $datosCars[0]->bicicleta : 0,
+			"motocicleta" => $datosCars[0]->motocicleta != null ? $datosCars[0]->motocicleta : 0,
+			"taxi" => $datosCars[0]->taxi != null ? $datosCars[0]->taxi : 0,
+			"publico" => $datosCars[0]->publico != null ? $datosCars[0]->publico : 0,
+			"repartidor" => $datosCars[0]->repartidor != null ? $datosCars[0]->repartidor : 0);
+
+
+		return $datosTotales;
 	}
 }
