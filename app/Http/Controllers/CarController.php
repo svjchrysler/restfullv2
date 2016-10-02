@@ -27,12 +27,8 @@ class CarController extends Controller
 		$car->calle_relevamiento = $req->relevamiento;
 		$car->calle_lateral_a = $req->lateral_a;
 		$car->calle_lateral_b = $req->lateral_b;
-		$car->temperatura = $req->temperatura;
-		$car->condiciones = $req->condiciones;
 		$car->hora_inicio = $req->inicio;
-		$car->hora_fin = $req->fin;
 		$car->fecha = $req->fecha;
-		$car->nota = $req->nota;
 		$car->save();
 		return "1";
 	}
