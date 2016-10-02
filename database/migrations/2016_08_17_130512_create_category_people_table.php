@@ -14,6 +14,7 @@ class CreateCategoryPeopleTable extends Migration
             $table->integer('ninia');
             $table->integer('mujer');
             $table->integer('anciano');
+            $table->integer('ninio');
             $table->string('calle_relevamiento');
             $table->string('calle_lateral_a');
             $table->string('calle_lateral_b');
